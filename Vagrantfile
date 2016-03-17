@@ -1,6 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+groups = {
+  "webservers" => ["minos", "pasiphae"],
+  "loadbalancers" => ["ariadne"],
+  "all_groups:children" => ["webservers", "loadbalancers"]
+}
+
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -66,9 +72,28 @@ Vagrant.configure(2) do |config|
   #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
   # end
 
-  config.vm.provision "ansible" do |ansible|
-    ansible.verbose = "v"
-    ansible.playbook = "playbook.yml"
+  config.vm.define "ariadne" do |ariadne|
+    ariadne.vm.provision "ansible" do |ansible|
+      ansible.playbook = "loadbalancer.yml"
+      ansible.sudo = true
+      ansible.groups = groups
+      ansible.limit = "all"
+    end
   end
 
+  config.vm.define "minos" do |minos|
+    minos.vm.provision "ansible" do |ansible|
+      ansible.playbook = "webserver.yml"
+      ansible.sudo = true
+      ansible.limit = "all"
+    end
+  end
+
+  config.vm.define "pasiphae" do |pasiphae|
+    pasiphae.vm.provision "ansible" do |ansible|
+      ansible.playbook = "webserver.yml"
+      ansible.sudo = true
+      ansible.limit = "all"
+    end
+  end
 end

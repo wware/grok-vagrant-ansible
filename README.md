@@ -10,3 +10,8 @@ I'm a bit mystified by
 [hosts](http://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-14-04#configuring-ansible-hosts)
 in Ansible. For now my solution is to use "all" since I'm currently only setting up one machine,
 but I'll need to be smarter before too long.
+
+So I'm working mostly from
+[this blog post](http://blog.wjlr.org.uk/2014/12/30/multi-machine-vagrant-ansible-gotcha.html)
+to clear up my confusion around hosts. I've already spun up three machines but they're not
+networked together yet.

@@ -1,0 +1,7 @@
+---
+- hosts: all
+  tasks:
+    - apt: name=haproxy state=present
+    - service: name=haproxy state=started
+    - name: Configure haproxy
+      template: src=templates/haproxy.cfg.j2 dest=/etc/haproxy/haproxy.cfg
